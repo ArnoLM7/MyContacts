@@ -1,0 +1,110 @@
+{
+	"/api/auth/register": {
+		"post": {
+			"summary": "Inscription d'un nouvel utilisateur",
+			"tags": ["Auth"],
+			"requestBody": {
+				"required": true,
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "object",
+							"required": ["username", "email", "password"],
+							"properties": {
+								"username": {
+									"type": "string",
+									"example": "johndoe"
+								},
+								"email": {
+									"type": "string",
+									"example": "johndoe@example.com"
+								},
+								"password": {
+									"type": "string",
+									"example": "mySecret123"
+								}
+							}
+						}
+					}
+				}
+			},
+			"responses": {
+				"201": {
+					"description": "Utilisateur créé avec succès",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string",
+										"example": "507f1f77bcf86cd799439011"
+									},
+									"username": {
+										"type": "string",
+										"example": "johndoe"
+									},
+									"email": {
+										"type": "string",
+										"example": "johndoe@example.com"
+									}
+								}
+							}
+						}
+					}
+				},
+				"400": {
+					"description": "Données invalides"
+				}
+			}
+		}
+	},
+	"/api/auth/login": {
+		"post": {
+			"summary": "Connexion utilisateur",
+			"tags": ["Auth"],
+			"requestBody": {
+				"required": true,
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "object",
+							"required": ["email", "password"],
+							"properties": {
+								"email": {
+									"type": "string",
+									"example": "john@example.com"
+								},
+								"password": {
+									"type": "string",
+									"example": "123456"
+								}
+							}
+						}
+					}
+				}
+			},
+			"responses": {
+				"200": {
+					"description": "Connexion réussie",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"token": {
+										"type": "string",
+										"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+									}
+								}
+							}
+						}
+					}
+				},
+				"400": {
+					"description": "Identifiants invalides"
+				}
+			}
+		}
+	}
+}

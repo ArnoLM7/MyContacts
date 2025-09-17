@@ -1,0 +1,31 @@
+{
+	"/api/auth/login": {
+		"post": {
+			"summary": "Connexion utilisateur",
+			"tags": ["Auth"],
+			"requestBody": {
+				"required": true,
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "object",
+							"required": ["email", "password"],
+							"properties": {
+								"email": { "type": "string", "example": "john@example.com" },
+								"password": { "type": "string", "example": "123456" }
+							}
+						}
+					}
+				}
+			},
+			"responses": {
+				"200": {
+					"description": "Connexion réussie"
+				},
+				"400": {
+					"description": "Identifiants invalides"
+				}
+			}
+		}
+	}
+}
