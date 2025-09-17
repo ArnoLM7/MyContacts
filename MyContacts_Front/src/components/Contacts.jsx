@@ -18,19 +18,22 @@ export default function Contacts() {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [editingContact, setEditingContact] = useState(null);
 
+	// Déconnexion
 	const handleLogout = () => {
-		localStorage.removeItem("token"); // supprime le token
-		navigate("/"); // retourne à la page login
+		localStorage.removeItem("token");
+		navigate("/");
 	};
 
+	// Vérification du token et récupération des contacts
 	useEffect(() => {
 		if (!token || token === "undefined") {
 			navigate("/");
 		} else {
 			fetchContacts();
 		}
-	}, [APIURL]);
+	}, []);
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const fetchContacts = async () => {
 		setLoading(true);
 		setError("");
@@ -248,7 +251,7 @@ export default function Contacts() {
 								</button>
 								<button
 									type="submit"
-									className="px-4 py-2 bg-yellow-800 text-white font-mono rounded-3xl hover:bg-yellow-950"
+									className="px-4 py-2 bg-yellow-400 text-white font-mono rounded-3xl hover:bg-yellow-80	0"
 								>
 									Modifier
 								</button>

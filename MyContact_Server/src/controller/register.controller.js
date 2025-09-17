@@ -1,54 +1,40 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
 const asyncHandler = require("express-async-handler");
 
-// Inscription d'un nouvel utilisateur
 const register = asyncHandler(async (req, res) => {
-	const { fullName, email, createdAt } = req.body;
+	const { fullName, email, password } = req.body;
 
-	// On vérifie si l'email existe déjà
-	const verifyEmail = await userModel.findOne({ email: email });
-	try {
-		if (verifyEmail) {
-			return res.status(403).json({
-				message: "Email déjà utilisé",
-			});
-		} else {
-			// Hashage du mot de passe
-			bcrypt.hash(req.body.password, 10).then((hash) => {
-				// Création d'un nouvel utilisateur
-				const user = new userModel({
-					fullName: fullName,
-					email: email,
-					password: hash,
-					createdAt: createdAt,
-				});
-
-				// Création de l'utilisateur dans la base de données
-				user
-					.save()
-					.then((response) => {
-						return res.status(201).json({
-							message: "Utilisateur créé",
-							result: response,
-							success: true,
-						});
-					})
-					.catch((error) => {
-						res.status(500).json({
-							error: error,
-						});
-					});
-			});
-		}
-	} catch (error) {
-		return res.status(412).send({
-			success: false,
-			message: error.message,
-		});
+	// Vérification si l'email existe déjà
+	const existingUser = await userModel.findOne({ email });
+	if (existingUser) {
+		return res.status(403).json({ message: "Email déjà utilisé" });
 	}
+
+	// Hash du mot de passe
+	const hashedPassword = await bcrypt.hash(password, 10);
+
+	// Création de l'utilisateur
+	const user = await userModel.create({
+		fullName,
+		email,
+		password: hashedPassword,
+		createdAt: new Date(),
+	});
+
+	// Génération d’un token direct
+	const token = jwt.sign(
+		{ id: user._id, email: user.email },
+		process.env.JWT_SECRET,
+		{ expiresIn: "1h" }
+	);
+
+	return res.status(201).json({
+		message: "Utilisateur créé",
+		accessToken: token,
+		success: true,
+	});
 });
 
-module.exports = {
-	register,
-};
+module.exports = { register };
