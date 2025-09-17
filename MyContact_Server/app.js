@@ -10,13 +10,7 @@ const app = express();
 // Cors pour autoriser les requêtes depuis le frontend
 const cors = require("cors");
 
-app.use(
-	cors({
-		origin: "http://localhost:5173",
-		methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-		credentials: true,
-	})
-);
+app.use(cors());
 
 // Middleware pour parser les requêtes JSON
 app.use(express.json());
