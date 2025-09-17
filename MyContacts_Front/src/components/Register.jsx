@@ -72,7 +72,7 @@ export default function Register() {
 
 	return (
 		<div className="flex items-center justify-center min-h-screen p-4 bg-gray-100">
-			<div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+			<div className="w-full max-w-md p-6">
 				<h1 className="text-4xl font-bold mb-6 text-center font-mono">
 					S'inscrire
 				</h1>
