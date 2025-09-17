@@ -29,7 +29,7 @@ const loginValidation = async (req, res, next) => {
 		if (!status) {
 			res.status(412).send({
 				success: false,
-				message: "Login validation failed",
+				message: "L'email ou le mot de passe est invalide",
 				data: err,
 			});
 		} else {

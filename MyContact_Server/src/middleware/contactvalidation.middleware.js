@@ -10,7 +10,7 @@ const contactValidation = async (req, res, next) => {
 		if (!status) {
 			res.status(412).send({
 				success: false,
-				message: "Contact validation failed",
+				message: "Les champs ne sont pas correctement remplis",
 				data: err,
 			});
 		} else {

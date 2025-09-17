@@ -7,16 +7,23 @@ const contact = require("./src/routes/contact.routes");
 const express = require("express");
 const app = express();
 
+// Cors pour autoriser les requêtes depuis le frontend
+const cors = require("cors");
+
+app.use(
+	cors({
+		origin: "http://localhost:5173",
+		methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+		credentials: true,
+	})
+);
+
 // Middleware pour parser les requêtes JSON
 app.use(express.json());
 
 // Utilisation des routes "auth"
 app.use("/api/auth", auth);
 app.use("/api/contact", contact);
-
-// Cors pour autoriser les requêtes depuis le frontend
-const cors = require("cors");
-app.use(cors());
 
 // Documentation Swagger
 const swaggerUI = require("swagger-ui-express");

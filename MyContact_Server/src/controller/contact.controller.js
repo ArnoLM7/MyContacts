@@ -9,12 +9,13 @@ const createContact = async (req, res) => {
 			firstName,
 			lastName,
 			phone,
+			user: req.userData.id,
 		});
 
 		const saved = await contact.save();
 
 		return res.status(201).json({
-			message: "Contact successfully created!",
+			message: "Contact créé!",
 			result: saved,
 			success: true,
 		});
@@ -28,7 +29,7 @@ const createContact = async (req, res) => {
 
 const getContacts = async (req, res) => {
 	try {
-		const contacts = await contactModel.find();
+		const contacts = await contactModel.find({ user: req.userData.id });
 		return res.status(200).json({
 			contacts: contacts,
 			success: true,
@@ -47,7 +48,7 @@ const updateContact = async (req, res) => {
 		const contactId = req.params.id;
 
 		const updatedContact = await contactModel.findByIdAndUpdate(
-			contactId,
+			{ _id: contactId, user: req.userData.id },
 			{
 				firstName,
 				lastName,
@@ -58,13 +59,13 @@ const updateContact = async (req, res) => {
 
 		if (!updatedContact) {
 			return res.status(404).json({
-				message: "Contact not found",
+				message: "Contact non trouvé",
 				success: false,
 			});
 		}
 
 		return res.status(200).json({
-			message: "Contact successfully updated!",
+			message: "Contact mis à jour avec succès!",
 			result: updatedContact,
 			success: true,
 		});
@@ -80,16 +81,19 @@ const deleteContact = async (req, res) => {
 	try {
 		const contactId = req.params.id;
 
-		const deletedContact = await contactModel.findByIdAndDelete(contactId);
+		const deletedContact = await contactModel.findByIdAndDelete({
+			_id: contactId,
+			user: req.userData.id,
+		});
 
 		if (!deletedContact) {
 			return res.status(404).json({
-				message: "Contact not found",
+				message: "Contact non trouvé",
 				success: false,
 			});
 		}
 		return res.status(200).json({
-			message: "Contact successfully deleted!",
+			message: "Contact supprimé avec succès!",
 			result: deletedContact,
 			success: true,
 		});

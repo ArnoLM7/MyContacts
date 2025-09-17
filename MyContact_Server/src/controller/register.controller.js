@@ -11,7 +11,7 @@ const register = asyncHandler(async (req, res) => {
 	try {
 		if (verifyEmail) {
 			return res.status(403).json({
-				message: "Email already used",
+				message: "Email déjà utilisé",
 			});
 		} else {
 			// Hashage du mot de passe
@@ -29,7 +29,7 @@ const register = asyncHandler(async (req, res) => {
 					.save()
 					.then((response) => {
 						return res.status(201).json({
-							message: "user successfully created!",
+							message: "Utilisateur créé",
 							result: response,
 							success: true,
 						});

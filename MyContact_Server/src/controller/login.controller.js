@@ -34,6 +34,7 @@ const login = asyncHandler(async (req, res) => {
 				// On génère un token JWT
 				let jwtToken = jwt.sign(
 					{
+						id: getUser._id,
 						email: getUser.email,
 					},
 
