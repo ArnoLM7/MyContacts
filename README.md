@@ -15,7 +15,7 @@ Il permet de gérer vos contacts facilement avec un front moderne en **React** e
 
 * **Frontend :** React, Vite, TailwindCSS
 * **Backend :** Express.js, bcryptjs, jsonwebtoken, cors, validatorjs, swagger-ui
-* **Base de données :** (à préciser selon ton choix)
+* **Base de données :** MongoDB
 
 ---
 
